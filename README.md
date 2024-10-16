@@ -1,6 +1,6 @@
-# Projet CRUD POO en PHP
+# Exercice POO CRUD User
 
-Ce projet est un exercice de **Programmation Orientée Objet (POO)** en PHP, implémentant un système **CRUD** (Create, Read, Update, Delete) pour la gestion des utilisateurs. Il met en pratique les concepts de la POO tout en utilisant une base de données MySQL pour stocker les informations des utilisateurs.
+Ce projet est un exercice de **Programmation Orientée Objet (POO)** en PHP, implémentant un système **CRUD** (Create, Read, Update, Delete) pour la gestion des utilisateurs. Il met en pratique les concepts de la POO tout en utilisant une base de données MySQL pour stocker les informations des utilisateurs. Le projet a été développé dans un environnement **Laragon**.
 
 ## Fonctionnalités
 
@@ -14,15 +14,15 @@ Ce projet est un exercice de **Programmation Orientée Objet (POO)** en PHP, imp
 
 - PHP 7.4 ou supérieur
 - MySQL
-- Serveur web (Apache, Nginx, etc.)
+- **Laragon** (environnement de développement tout-en-un)
 - Composer (gestionnaire de dépendances PHP)
 
 ## Installation
 
 1. **Cloner le dépôt :**
-    ```bash
-    git clone https://github.com/votre-utilisateur/exo-crud-poo-php-2e.git
-    cd exo-crud-poo-php-2e
+   ```bash
+   git clone https://github.com/votre-utilisateur/exo-crud-poo-php-2e.git
+   cd exo-crud-poo-php-2e
     ```
 
 2. **Installer les dépendances avec Composer :**
@@ -30,9 +30,10 @@ Ce projet est un exercice de **Programmation Orientée Objet (POO)** en PHP, imp
     composer install
     ```
 
-3. **Configurer votre base de données MySQL :**
-    - Créez une base de données et un utilisateur MySQL.
-    - Importez le fichier de migration pour créer les tables nécessaires :
+3. **Configurer votre base de données MySQL avec Laragon :**
+    - Ouvrez Laragon et assurez-vous que MySQL est démarré.
+    - Créez une base de données et un utilisateur MySQL via phpMyAdmin ou directement depuis Laragon.
+    - Importez le fichier de migration pour créer les tables nécessaires:
       ```bash
       mysql -u votre-utilisateur -p votre-base-de-donnees < migrations/users.sql
       ```
@@ -49,11 +50,9 @@ Ce projet est un exercice de **Programmation Orientée Objet (POO)** en PHP, imp
     ];
     ```
 
-5. **Lancer l'application :**
-    Utilisez un serveur web local ou démarrez un serveur intégré PHP :
-    ```bash
-    php -S localhost:8000
-    ```
+5. **Lancer l'application avec Laragon :**
+    - Démarrez le serveur Apache via Laragon.
+    - Rendez-vous sur localhost pour accéder à l'application.
 
 ## Structure du Projet
 

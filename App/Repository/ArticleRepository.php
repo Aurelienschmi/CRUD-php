@@ -35,6 +35,12 @@
             return $articles;
         }
 
+        public function delete($id) {
+            $stmt = $this->db->prepare("DELETE FROM articles WHERE id = :id");
+            $stmt->bindValue(':id', $id);
+            return $stmt->execute();
+        }
+
         public function find($id) : ?Article {
             $stmt = $this->db->prepare("
                 SELECT articles.*, users.username AS author_name 

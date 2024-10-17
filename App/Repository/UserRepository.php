@@ -30,9 +30,10 @@ class UserRepository {
         return $users;
     }
 
+    
+
     public function create(User $user) {
         $stmt = $this->db->prepare("INSERT INTO users (username, email, password, photo, created_at, last_connection, role_admin) VALUES (:username, :email, :password, :photo, :created_at, :last_connection, :role_admin)");
-        
         $stmt->bindValue(':username', $user->getUsername());
         $stmt->bindValue(':email', $user->getMail());
         $stmt->bindValue(':password', $user->getPassword());

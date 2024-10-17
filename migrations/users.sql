@@ -19,3 +19,4 @@ ADD COLUMN last_connection DATETIME;
 ALTER TABLE users
 ADD COLUMN role_admin BOOL;
 
+

@@ -85,6 +85,9 @@
     <br/>
 
     <p><strong>Auteur :</strong> <?= htmlspecialchars($article->getAuthorName()) ?></p>
+    <br>
+    <a href="delete_articles.php?id=<?= $article->getId() ?>">Supprimer</a>
+
 
     <br>
     <a href="index.php">Retour à la liste des articles</a>

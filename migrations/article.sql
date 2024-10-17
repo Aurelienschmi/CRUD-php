@@ -5,5 +5,6 @@ CREATE TABLE articles (
     content TEXT NOT NULL,
     image VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    likes INT DEFAULT 0,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );

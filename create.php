@@ -38,6 +38,12 @@
             $errors[] = "L'email n'est pas valide.";
         }
 
+        //Verification si l'email est déjà utilisé
+        $userRepo = new UserRepository();
+        if ($userRepo->findByEmail($mail) !== null) {
+            $errors[] = "L'email est déjà utilisé.";
+        }
+
         if (strlen($password) < 8) {
             $errors[] = "Le mot de passe doit contenir au moins 8 caractères.";
         }

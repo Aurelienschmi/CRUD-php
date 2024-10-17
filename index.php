@@ -2,11 +2,16 @@
     require 'autoload.php';
     
     use App\Repository\ArticleRepository;
+    use App\Repository\LikeRepository;
+    use App\Repository\CommentRepository;
 
     session_start();
     
     $articleRepo = new ArticleRepository();
-    $articles = $articleRepo->findAll();
+    $findArticles = $articleRepo->findAll();
+    
+    //inverser les articles
+    $articles = array_reverse($findArticles);
 
     if (!isset($_SESSION['user_id'])) {
         header('Location: login.php');
@@ -15,6 +20,8 @@
 
     // Si l'utilisateur est connecté, on récupère son nom
     $userName = $_SESSION['username'];
+    $id = $_SESSION['user_id'];
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -95,17 +102,39 @@
     <div class="container">
         <p class="welcome">Welcome <?php echo $userName ?></p>
         <a class="logout" href="logout.php">Deconnexion</a>
+        <a href="read.php?id=<?php echo $id ?>" >Profile</a>
         <h1>Liste des articles</h1>
         <a class="create-article" href="create_article.php">Créer un article</a>
         <ul>
             <?php foreach ($articles as $article): ?>
                 <li>
-                    <h2><?= htmlspecialchars($article->getTitle()) ?></h2>
+                    <?php 
+                        $id = $article->getId();
+                        $art = $articleRepo->find($id);
+
+                        $likeRepo = new LikeRepository();
+                        $likes = $likeRepo->getLikesCount($id);
+
+                        $commentRepo = new CommentRepository();
+                        $comments = $commentRepo->getCommentsByArticleId($id);
+                        ?>
+
+                    <h2><a href="read.php?id=<?= $art->getUserId() ?>" style="text-decoration:none;"><?= $art->getAuthorName() ?> </h2>
                     <?php if ($article->getImage()): ?>
                         <img src="<?= htmlspecialchars($article->getImage()) ?>" alt="Image de l'article">
                     <?php endif; ?>
                     <br/>
+                    <button><a href="like_article.php?id=<?= $article->getId() ?>"style="text-decoration:none;">like <?php echo $likes  ?></a></button>
                     <a href="article.php?id=<?= $article->getId() ?>">Lire l'article</a>
+                    <a href="delete_articles.php?id=<?= $article->getId() ?>">Supprimer</a>
+                    <br>
+                    <a href="add_comment.php?id=<?= $article->getId() ?>">Ajouter un commentaire</a>
+                    <h3>Commentaires</h3>
+                    <ul id="comment-list-<?= $article->getId() ?>">
+                        <?php foreach ($comments as $comment): ?>
+                            <li><?= htmlspecialchars($comment->getContent()) ?> - <em><?= htmlspecialchars($comment->getCreatedAt()->format('Y-m-d H:i:s')) ?></em></li>
+                        <?php endforeach; ?>
+                    </ul>
                 </li>
             <?php endforeach; ?>
         </ul>

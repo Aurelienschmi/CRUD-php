@@ -7,10 +7,7 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 
 // Vérifier si l'utilisateur est connecté
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-    exit;
-}
+
 $admin = $_SESSION['admin'];
 $userId = $_SESSION['user_id'];
 
@@ -24,11 +21,11 @@ if (isset($_GET['id'])) {
     $user = $userRepo->read($_GET['id']);
 }
 
-//Verifie que l'utilisateur est admin
-if (!$admin && $userId !== $user->getId()) {
+if (!isset($_SESSION['user_id']) || $_GET['id'] != $userId) {
     header('Location: index.php');
     exit;
 }
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
@@ -107,11 +104,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Créer l'objet utilisateur avec les données mises à jour
-        $updatedUser = new User($name, $mail, $password_hash, $target_file, $role_admin, $user->getId());
+        $updatedUser = new User($name, $mail, $password_hash, $target_file, $user->getId());
 
         try {
             $userRepo->update($updatedUser);
-            header('Location: list_users.php');
+            var_dump($updatedUser);
+            header('Location: index.php');
             exit;
         } catch(Exception $e) {
             echo "Erreur: " . $e->getMessage();
@@ -219,7 +217,6 @@ if ($user === null) {
             <input type="file" name="photo">
             <button type="submit" name="modification">Modifier l'utilisateur</button>
         </form>
-        <?php var_dump($user->getRoleAdmin()); ?>
         <a href="list_users.php">Retour à la liste des utilisateurs</a>
 
     </div>
